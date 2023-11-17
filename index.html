@@ -2,27 +2,11 @@
 <html lang="de">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Level Tracker</title>
   <style>
-    .container {
-      display: flex;
-    }
-
-    table {
-      border-collapse: collapse;
-      width: 100%;
-      margin-right: 200px; /* Abstand zwischen den Tabellen */
-    }
-
-     th, td {
-      border: 1px solid #808080;
-      text-align: left;
-      padding: 8px;
-    }
-
-   
-
+    
+     
     body {
       font-family: 'Helvetica', sans-serif;
       background-color: #282c35;
@@ -33,14 +17,33 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
+      height: auto; /* Änderung hier auf 'auto' */
       text-align: center;
+      overflow: auto; /* Hier wurde overflow: auto hinzugefügt */
     }
 
-    #levelBild {
-      max-width: 100px;
-      margin-bottom: 20px;
+
+    .container {
+      display: flex;
+     
     }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 10px;
+      margin-bottom: 35px;
+      margin-right: 200px; /* Abstand zwischen den Tabellen */
+    }
+
+     th, td {
+      border: 1px solid #808080;
+      text-align: left;
+      padding: 8px;
+      font-size: 12px;
+    }
+
+   
 
     h1, h2 {
       color: #61dafb;
@@ -48,6 +51,11 @@
 
     h2 {
       margin-top: 10px;
+    }
+
+    h3 {
+      color: #F781F3;
+      font-size: 24px;
     }
 
     ul {
@@ -95,8 +103,8 @@
     <br>
   <h2>Netzwerke:</h2>
     <ul id="netzwerkeErgebnis"></ul>
-    <br>
-<h2>Übersicht:</h2>
+    <br> <br>
+<h3>Übersicht:</h3>
 
   <script>
     // Sample data
@@ -190,7 +198,8 @@
 
   function uebersichtAnzeigen(liste, titel) {
   document.write('<div>');
-  document.write('<h3>' + titel + '</h3>');
+  document.write('<span>' + titel +  ':'+ '</span>');
+ 
   document.write('<table>');
   document.write('<tr><th>Level</th><th>Rechte</th></tr>');
 
@@ -212,5 +221,6 @@ uebersichtAnzeigen(sportarten, 'Sportarten');
 uebersichtAnzeigen(essen, 'Essen');
 
   </script>
+  <br> <br> <br>
 </body>
 </html>
