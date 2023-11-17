@@ -1,10 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Level Tracker</title>
   <style>
+    .container {
+      display: flex;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-right: 200px; /* Abstand zwischen den Tabellen */
+    }
+
+     th, td {
+      border: 1px solid #808080;
+      text-align: left;
+      padding: 8px;
+    }
+
+   
+
     body {
       font-family: 'Helvetica', sans-serif;
       background-color: #282c35;
@@ -60,126 +78,139 @@
   </style>
 </head>
 <body>
+  <h1>
+    <span>Level:</span>
+    <span id="level">1</span>
+  </h1>
 
-  <!-- Füge das Bild vor dem Level-Label ein -->
-  <img src="https://loriballen.com/wp-content/uploads/2023/07/under-construction-landing-page.jpeg" alt="Rocket Image" id="levelBild">
+  <br>
 
-  <h1>Level: <span id="wertLabel">0</span></h1>
   <div>
-      <button onclick="verringern()">-</button>
-      <button onclick="erhoehen()">+</button>
+    <button onclick="decreaseLevel()">-</button>
+    <button onclick="increaseLevel()">+</button>
   </div>
-  
-  <!-- Erste Liste für Aufgaben -->
-  <h2>Aufgaben:</h2>
-  <ul id="aufgabenListe"></ul>
-
-  <!-- Zweite Liste für Routinen -->
-  <h2>Routinen:</h2>
-  <ul id="routinenListe"></ul>
+<br><br>
+  <h2>Essen:</h2>
+    <ul id="essenErgebnis"></ul>
+    <br>
+  <h2>Netzwerke:</h2>
+    <ul id="netzwerkeErgebnis"></ul>
+    <br>
+<h2>Übersicht:</h2>
 
   <script>
-    var wert = 0; // Der Anfangswert
+    // Sample data
+    var automarken = [
+      { name: "Toyota", nummer: 1 },
+      { name: "Ford", nummer: 15 },
+      { name: "BMW", nummer: 17},
+      { name: "Volkswagen", nummer:25 }
+    ];
 
-    function erhoehen() {
-      wert += 1;
-      aktualisiereLabel();
-      zeigeAufgaben();
-      zeigeRoutinen();
-      aktualisiereBild();
+    var sozialenetzwerke = [
+      { name: "Facebook", nummer: 5 },
+      { name: "Twitter", nummer: 10 },
+      { name: "Instagram", nummer: 29 },
+      { name: "LinkedIn", nummer: 40 }
+    ];
+
+    var sportarten = [
+      { name: "Fußball", nummer: 4},
+      { name: "Basketball", nummer: 12 },
+      { name: "Tennis", nummer: 20 },
+      { name: "Schwimmen", nummer: 40 }
+    ];
+
+    var essen = [
+      { name: "Pizza", nummer:2},
+      { name: "Sushi", nummer: 13 },
+      { name: "Burger", nummer: 20 },
+      { name: "Salat", nummer: 50}
+    ];
+
+    var levelElement = document.getElementById('level');
+    var currentLevel = 1;
+
+    function updateLevel() {
+      levelElement.textContent = currentLevel;
     }
 
-    function verringern() {
-      wert -= 1;
-      aktualisiereLabel();
-      versteckeAufgaben();
-      versteckeRoutinen();
-      zeigeAufgaben();
-      zeigeRoutinen();
-      aktualisiereBild();
+    function increaseLevel() {
+      currentLevel++;
+      updateLevel();  
+      showEssen(essen);
+      showSozialenetzwerke(sozialenetzwerke);
     }
 
-    function aktualisiereLabel() {
-      document.getElementById("wertLabel").textContent = wert;
+    function decreaseLevel() {
+      if (currentLevel > 1) {
+        currentLevel--;
+        updateLevel();
+      }
+      showEssen(essen);
+      showSozialenetzwerke(sozialenetzwerke);
     }
 
-    function zeigeAufgaben() {
-      var aufgabenListe = document.getElementById("aufgabenListe");
+    function showEssen(essenListe) {
+    // Leere den vorherigen Inhalt des Ergebnisdivs
+    document.getElementById('essenErgebnis').innerHTML = "";
 
-      // Schwellenwerte für Aufgaben
-      var aufgabenSchwellenwerte = [5, 7, 10, 15, 20, 25];
-
-      // Überprüfen, ob der aktuelle Wert einen Schwellenwert für Aufgaben erreicht hat
-      if (aufgabenSchwellenwerte.includes(wert)) {
-        var aufgabenId = "aufgabe" + wert;
-        if (!document.getElementById(aufgabenId)) {
-          var neueAufgabe = document.createElement("li");
-          neueAufgabe.textContent = "Neue Aufgabe bei Level " + wert;
-          neueAufgabe.id = aufgabenId;
-          aufgabenListe.appendChild(neueAufgabe);
-        }
+    // Iteriere durch die Essensliste
+    for (var i = 0; i < essenListe.length; i++) {
+      // Überprüfe, ob die Nummer des Essens kleiner als currentLevel ist
+      if (essenListe[i].nummer < currentLevel) {
+        // Erstelle ein neues div-Element für das Essen
+        var div = document.createElement('div');
+        // Setze den Text des divs auf den Namen des Essens
+        div.textContent = essenListe[i].name;
+        // Füge das div dem Ergebnisdiv hinzu
+        document.getElementById('essenErgebnis').appendChild(div);
       }
     }
+  }
 
-    function zeigeRoutinen() {
-      var routinenListe = document.getElementById("routinenListe");
+    function showSozialenetzwerke(liste) {
+    // Leere den vorherigen Inhalt des Ergebnisdivs
+    document.getElementById('netzwerkeErgebnis').innerHTML = "";
 
-      // Schwellenwerte für Routinen (andere als die für Aufgaben)
-      var routinenSchwellenwerte = [3, 8, 12, 18, 22, 30];
-
-      // Überprüfen, ob der aktuelle Wert einen Schwellenwert für Routinen erreicht hat
-      if (routinenSchwellenwerte.includes(wert)) {
-        var routinenId = "routine" + wert;
-        if (!document.getElementById(routinenId)) {
-          var neueRoutine = document.createElement("li");
-          neueRoutine.textContent = "Neue Routine bei Level " + wert;
-          neueRoutine.id = routinenId;
-          routinenListe.appendChild(neueRoutine);
-        }
+    // Iteriere durch die Essensliste
+    for (var i = 0; i < liste.length; i++) {
+      // Überprüfe, ob die Nummer des Essens kleiner als currentLevel ist
+      if (liste[i].nummer < currentLevel) {
+        // Erstelle ein neues div-Element für das Essen
+        var div = document.createElement('div');
+        // Setze den Text des divs auf den Namen des Essens
+        div.textContent = liste[i].name;
+        // Füge das div dem Ergebnisdiv hinzu
+        document.getElementById('netzwerkeErgebnis').appendChild(div);
       }
     }
+  }
 
-    function versteckeAufgaben() {
-      var aufgabenListe = document.getElementById("aufgabenListe");
 
-      // Alle Aufgaben-Elemente entfernen, die nicht mehr angezeigt werden sollen
-      for (var i = 0; i < aufgabenSchwellenwerte.length; i++) {
-        if (aufgabenSchwellenwerte[i] > wert) {
-          var aufgabenElement = document.getElementById("aufgabe" + aufgabenSchwellenwerte[i]);
-          if (aufgabenElement) {
-            aufgabenElement.remove();
-          }
-        }
-      }
-    }
+  function uebersichtAnzeigen(liste, titel) {
+  document.write('<div>');
+  document.write('<h3>' + titel + '</h3>');
+  document.write('<table>');
+  document.write('<tr><th>Level</th><th>Rechte</th></tr>');
 
-    function versteckeRoutinen() {
-      var routinenListe = document.getElementById("routinenListe");
+  for (var i = 0; i < liste.length; i++) {
+    document.write('<tr>');
+    document.write('<td>' + liste[i].nummer + '</td>');
+    document.write('<td>' + liste[i].name + '</td>');
+    document.write('</tr>');
+  }
 
-      // Alle Routinen-Elemente entfernen, die nicht mehr angezeigt werden sollen
-      for (var i = 0; i < routinenSchwellenwerte.length; i++) {
-        if (routinenSchwellenwerte[i] > wert) {
-          var routinenElement = document.getElementById("routine" + routinenSchwellenwerte[i]);
-          if (routinenElement) {
-            routinenElement.remove();
-          }
-        }
-      }
-    }
+  document.write('</table>');
+  document.write('</div>');
+}
 
-    function aktualisiereBild() {
-      // Schwellenwert für Bildaustausch
-      var bildSchwellenwert > 20;
 
-      // Überprüfen, ob der aktuelle Wert den Schwellenwert für den Bildaustausch erreicht hat
-      if (wert > bildSchwellenwert) {
-        document.getElementById("levelBild").src = "https://www.w3schools.com/images/w3schools_green.jpg"; // Ersetze durch den Pfad zum neuen Bild
-      } else {
-        // Falls der Schwellenwert nicht mehr erreicht ist, setze das Bild zurück
-        document.getElementById("levelBild").src = "https://loriballen.com/wp-content/uploads/2023/07/under-construction-landing-page.jpeg";
-      }
-    }
+uebersichtAnzeigen(automarken, 'Automarken');
+uebersichtAnzeigen(sozialenetzwerke, 'Sozialenetzwerke');
+uebersichtAnzeigen(sportarten, 'Sportarten');
+uebersichtAnzeigen(essen, 'Essen');
+
   </script>
-
 </body>
 </html>
