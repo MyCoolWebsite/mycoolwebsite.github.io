@@ -79,8 +79,7 @@
   <ul id="routinenListe"></ul>
 
   <script>
-    // Versuche, den letzten Wert aus dem localStorage zu laden
-    var wert = localStorage.getItem('levelWert') ? parseInt(localStorage.getItem('levelWert')) : 0;
+    var wert = 0; // Der Anfangswert
 
     function erhoehen() {
       wert += 1;
@@ -88,7 +87,6 @@
       zeigeAufgaben();
       zeigeRoutinen();
       aktualisiereBild();
-      speichereLevelWert();
     }
 
     function verringern() {
@@ -99,7 +97,6 @@
       zeigeAufgaben();
       zeigeRoutinen();
       aktualisiereBild();
-      speichereLevelWert();
     }
 
     function aktualisiereLabel() {
@@ -182,19 +179,6 @@
         document.getElementById("levelBild").src = "https://loriballen.com/wp-content/uploads/2023/07/under-construction-landing-page.jpeg";
       }
     }
-
-    function speichereLevelWert() {
-      // Speichere den aktuellen Wert im localStorage
-      localStorage.setItem('levelWert', wert);
-    }
-
-    // Initialisiere das Label mit dem gespeicherten Wert
-    aktualisiereLabel();
-    // Initialisiere die Aufgaben und Routinen mit dem gespeicherten Wert
-    zeigeAufgaben();
-    zeigeRoutinen();
-    // Initialisiere das Bild mit dem gespeicherten Wert
-    aktualisiereBild();
   </script>
 
 </body>
