@@ -54,7 +54,7 @@
     }
 
     h3 {
-      color: #F781F3;
+      color: ;
       font-size: 24px;
     }
 
@@ -109,17 +109,17 @@
   <script>
     // Sample data
     var automarken = [
-      { name: "Toyota", nummer: 1 },
+      { name: "Toyota", nummer: 1, ausblenden: 100 },
       { name: "Ford", nummer: 15 },
       { name: "BMW", nummer: 17},
       { name: "Volkswagen", nummer:25 }
     ];
 
     var sozialenetzwerke = [
-      { name: "Facebook", nummer: 5 },
-      { name: "Twitter", nummer: 10 },
-      { name: "Instagram", nummer: 29 },
-      { name: "LinkedIn", nummer: 40 }
+      { name: "Facebook", nummer: 5 , ausblenden: 10 },
+      { name: "Twitter", nummer: 10 , ausblenden: 29 },
+      { name: "Instagram", nummer: 29, ausblenden: 40  },
+      { name: "LinkedIn", nummer: 40 , ausblenden: 1000 }
     ];
 
     var sportarten = [
@@ -130,10 +130,10 @@
     ];
 
     var essen = [
-      { name: "Pizza", nummer:2},
-      { name: "Sushi", nummer: 13 },
-      { name: "Burger", nummer: 20 },
-      { name: "Salat", nummer: 50}
+      { name: "Pizza", nummer:2, ausblenden: 13 },
+      { name: "Sushi", nummer: 13 , ausblenden: 1000 },
+      { name: "Burger", nummer: 20 , ausblenden: 50 },
+      { name: "Salat", nummer: 50, ausblenden: 1000 }
     ];
 
     var levelElement = document.getElementById('level');
@@ -166,7 +166,7 @@
     // Iteriere durch die Essensliste
     for (var i = 0; i < essenListe.length; i++) {
       // Überprüfe, ob die Nummer des Essens kleiner als currentLevel ist
-      if (essenListe[i].nummer < currentLevel) {
+      if (essenListe[i].nummer <= currentLevel && !(essenListe[i].ausblenden <= currentLevel)) {
         // Erstelle ein neues div-Element für das Essen
         var div = document.createElement('div');
         // Setze den Text des divs auf den Namen des Essens
@@ -184,7 +184,7 @@
     // Iteriere durch die Essensliste
     for (var i = 0; i < liste.length; i++) {
       // Überprüfe, ob die Nummer des Essens kleiner als currentLevel ist
-      if (liste[i].nummer < currentLevel) {
+      if (liste[i].nummer <= currentLevel && !(liste[i].ausblenden <= currentLevel)) {
         // Erstelle ein neues div-Element für das Essen
         var div = document.createElement('div');
         // Setze den Text des divs auf den Namen des Essens
